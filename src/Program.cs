@@ -53,7 +53,6 @@ builder.Services
 
 var app = builder.Build();
 
-
 var aspNetServicesOptions = Config.GetAspNetServicesOptions();
 AspNetServicesHelper.ConfigureAspNetServices(builder.Services, aspNetServicesOptions);
 AspNetServicesHelper.UseAspNetServices(app, aspNetServicesOptions);
@@ -62,6 +61,13 @@ Config.ConfigureOptions<IdentityServerHost.Pages.Login.LoginOptions>("LOGIN");
 Config.ConfigureOptions<IdentityServerHost.Pages.Logout.LogoutOptions>("LOGOUT");
 
 app.UseDeveloperExceptionPage();
+var corsOptions = Config.GetServerCorsAllowedOrigins();
+
+app.UseCors(builder => builder
+     .WithOrigins(corsOptions.First())
+     .AllowAnyMethod()
+     .AllowAnyHeader()
+     .AllowCredentials());
 
 app.UseIdentityServer();
 
@@ -71,6 +77,7 @@ if (!string.IsNullOrEmpty(basePath))
     app.UseWhen(ctx => ctx.Request.Path.StartsWithSegments(basePath), appBuilder =>
     {
         appBuilder.UseMiddleware<BasePathMiddleware>();
+        appBuilder.UseMiddleware<BaseAuthMiddleWare>();
         appBuilder.UseMiddleware<IdentityServerMiddleware>();
     });
 }
