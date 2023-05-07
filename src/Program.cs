@@ -64,7 +64,7 @@ app.UseDeveloperExceptionPage();
 var corsOptions = Config.GetServerCorsAllowedOrigins();
 
 app.UseCors(builder => builder
-     .WithOrigins(corsOptions.First())
+     .WithOrigins(corsOptions.ToArray())
      .AllowAnyMethod()
      .AllowAnyHeader()
      .AllowCredentials());

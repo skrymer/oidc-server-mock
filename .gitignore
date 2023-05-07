@@ -16,3 +16,6 @@ src/wwwroot
 # Runtime data
 keys
 tempkey.jwk
+
+#Intellij
+.idea
