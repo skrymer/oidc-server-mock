@@ -2,6 +2,8 @@ using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Test;
+using System.Security.Claims;
+using IdentityModel;
 
 namespace OpenIdConnectServer.Services
 {
@@ -24,9 +26,15 @@ namespace OpenIdConnectServer.Services
         if (user != null)
         {
             Logger.LogDebug("The user was found in store");
-            var claims = context.FilterClaims(user.Claims);
-            context.AddRequestedClaims(claims);
+            var claims = new List<Claim>
+            {
+                new Claim("uid", subjectId),
+            };
+            Logger.LogDebug("Adding claims {claims}", claims);
+            context.IssuedClaims.AddRange(claims);
         }
+
+
         return Task.CompletedTask;
     }
 
