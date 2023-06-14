@@ -26,14 +26,9 @@ namespace OpenIdConnectServer.Services
         if (user != null)
         {
             Logger.LogDebug("The user was found in store");
-            var claims = new List<Claim>
-            {
-                new Claim("uid", subjectId),
-            };
-            Logger.LogDebug("Adding claims {claims}", claims);
-            context.IssuedClaims.AddRange(claims);
+            Logger.LogDebug("User claims {claims}", user.Claims);
+            context.IssuedClaims.AddRange(user.Claims);
         }
-
 
         return Task.CompletedTask;
     }

@@ -1,3 +1,11 @@
+# build docker image
+
+`docker build -t skrymer/mock-oidc-server:1.0.4 ./src`
+
+publish and build for arm and amd
+
+`docker buildx build --platform linux/amd64,linux/arm64 -t skrymer/mock-oidc-server:1.0.4 --push ./src`
+
 # OpenId Connect Server Mock
 
 ![Run Tests badge](https://github.com/Soluto/oidc-server-mock/workflows/Run%20Tests/badge.svg)

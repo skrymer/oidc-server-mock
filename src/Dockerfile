@@ -28,6 +28,8 @@ COPY --from=source /OpenIdConnectServerMock /OpenIdConnectServerMock
 WORKDIR /OpenIdConnectServerMock
 
 ENV ASPNETCORE_ENVIRONMENT=Development
+# Disable reload of the config, as M1 Macs don't support it. See https://github.com/elsa-workflows/elsa-core/issues/3114
+ENV ASPNETCORE_hostBuilder__reloadConfigOnChange: "false"
 
 EXPOSE 80
 
